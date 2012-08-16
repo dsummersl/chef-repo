@@ -55,8 +55,7 @@ end
 execute "tar zxf graylog2-server-#{node.graylog2.server.version}.tar.gz" do
   cwd "#{node.graylog2.basedir}/rel"
   creates "#{node.graylog2.basedir}/rel/graylog2-server-#{node.graylog2.server.version}/build_date"
-  action :nothing
-  subscribes :run, resources(:remote_file => "download_server"), :immediately
+  not_if "test -f #{node.graylog2.basedir}/rel/graylog2-server-#{node.graylog2.server.version}"
 end
 
 # Link to the desired Graylog2 server version

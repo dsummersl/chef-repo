@@ -44,8 +44,7 @@ end
 execute "tar zxf graylog2-web-interface-#{node.graylog2.web_interface.version}.tar.gz" do
   cwd "#{node.graylog2.basedir}/rel"
   creates "#{node.graylog2.basedir}/rel/graylog2-web-interface-#{node.graylog2.web_interface.version}/build_date"
-  action :nothing
-  subscribes :run, resources(:remote_file => "download_web_interface"), :immediately
+  not_if "test -f #{node.graylog2.basedir}/rel/graylog2-web-interface-#{node.graylog2.web_interface.version}"
 end
 
 # Link to the desired Graylog2 web interface version
@@ -56,8 +55,8 @@ end
 # Perform bundle install on the newly-installed Graylog2 web interface version
 execute "bundle install" do
   cwd "#{node.graylog2.basedir}/web"
-  action :nothing
   subscribes :run, resources(:link => "#{node.graylog2.basedir}/web"), :immediately
+  not_if "test -f #{node.graylog2.basedir}/web"
 end
 
 # Create mongoid.yml

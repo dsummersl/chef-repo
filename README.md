@@ -21,6 +21,7 @@ This will setup a VM with a working Graylog2 installation.
   3) Launch & provision VM
 
     cd examples
+  librarian-chef # download the chef-solo requirements
 	vagrant up    
 
 Enjoy your running Graylog2 instance (load http://127.0.0.1:8080 in a browser to  
